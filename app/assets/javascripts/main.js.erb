@@ -1,5 +1,15 @@
 $(function() {
-  var center = new google.maps.LatLng(42.358431, -71.059773);
+  // Mobile Site scroll screen to hide address bar
+    setTimeout(function() {
+      scrollTo(0, 1);
+    }, 0);
+  if($(window).width() <= 767) {
+    setTimeout(function() {
+      scrollTo(0, 1);
+    }, 0);
+  }
+  var center = new google.maps.LatLng(38.575067, -121.487761);
+  //var center = new google.maps.LatLng(42.358431, -71.059773);
   var mapOptions = {
     center: center,
     disableDoubleClickZoom: true,
@@ -182,6 +192,7 @@ $(function() {
   }
   $('#combo-form input[type="radio"]').live('click', function() {
     var radioInput = $(this);
+    console.log(radioInput.val());
     if('new' === radioInput.val()) {
       $('#combo-form').data('state', 'user_sign_up');
       $('#user_forgot_password_fields').slideUp();
@@ -192,6 +203,7 @@ $(function() {
     } else if('existing' === radioInput.val()) {
       $('#user_sign_up_fields').slideUp();
       $('#user_sign_in_fields').slideDown(function() {
+        console.log('existing: '+radioInput.val());
         $('#combo-form').data('state', 'user_sign_in');
         setComboFormFocus();
         $('#user_forgot_password_link').click(function() {

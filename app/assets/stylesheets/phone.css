@@ -1,0 +1,83 @@
+@media (max-width: 767px) {
+  #sidebar {
+    display: none;
+  }
+
+  #mobile-head {
+    height: 50px;
+    background: #c43c35;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
+    background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
+    background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: linear-gradient(top, #ee5f5b, #c43c35);
+    border-bottom: 4px solid #CCC;
+  }
+
+  #mobile-foot {
+    height: 22px;
+    background: #c43c35;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
+    background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
+    background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: linear-gradient(top, #ee5f5b, #c43c35);
+    border-top: 1px solid #CCC;
+  }
+  #mobile-foot-head {
+    height: 22px;
+    width: 100%;
+    border-bottom: 1px solid #CCC;
+  }
+  #mobile-foot-head-title {
+    padding-left: 8px;
+    padding-top: 3px;
+    z-index: 99;
+  }
+  #foot_container {
+    background: #fff;
+  }
+  #mobile-login {
+    width: 18%;
+    height: 100%;
+    border-right: 1px solid #CCC;
+    border-left: 1px solid #CCC;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 120%;
+    font-weight: bolder;
+    display: inline-block;
+  }
+  #mobile-logout {
+    width: 18%;
+    height: 100%;
+    border-right: 1px solid #CCC;
+    border-left: 1px solid #CCC;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 120%;
+    font-weight: bolder;
+    display: inline-block;
+  }
+
+  #mobile-search {
+    height: 100%;
+    padding-left: 5px;
+    padding-right: 15px;
+    display: inline-block;
+  }
+  .btn {
+  }
+  .btn-search {
+    width: 47px !important;
+    margin-top: 0px !important;
+  }
+  .search-query {
+    margin-top: 0px !important;
+    width: 130px !important;
+  }
+}

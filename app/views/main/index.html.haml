@@ -1,6 +1,13 @@
 .table
+  .table-row{:id => 'mobile-head', :class => 'mobile-gradient'}
+    #mobile-search
+      = render :partial => "mobile/search"
+    - if signed_in?
+      = render :partial => "mobile/signed_in"
+    - else
+      = render :partial => "mobile/sign_in"
   .table-row
-    .table-cell.sidebar
+    .table-cell.sidebar{:id => 'sidebar'}
       %h1
         = image_tag "logos/adopt-a-hydrant.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
       %p.alert-message.block-message#tagline
@@ -33,3 +40,6 @@
     .table-cell.map-container
       #map
         &nbsp;
+  .table-row{:id => 'mobile-foot'}
+    = render :partial => "mobile/footer"
+

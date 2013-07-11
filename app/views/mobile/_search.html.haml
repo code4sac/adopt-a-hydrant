@@ -1,0 +1,6 @@
+= form_tag "/address", :method => "get", :id => "address_form", :class => "search-form" do
+  = hidden_field_tag "limit", params[:limit] || 10
+  = hidden_field_tag "city_state", t("defaults.city_state")
+  = search_field_tag "address", params[:address], :placeholder => [t("defaults.address_1"), t("defaults.neighborhood")].join(", "), :class => "search-query"
+  /= submit_tag t("buttons.find", :thing => t("defaults.thing").pluralize), :class => "btn btn-primary"
+  = submit_tag 'Find', :class => "btn btn-primary btn-search"

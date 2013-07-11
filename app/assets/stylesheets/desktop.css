@@ -1,0 +1,10 @@
+@media (min-width: 767px) {
+  #mobile-head {
+    display: none;
+    border-bottom: 1px solid #CCC;
+  }
+  #mobile-foot {
+    display: none;
+    border-top: 1px solid #CCC;
+  }
+}
