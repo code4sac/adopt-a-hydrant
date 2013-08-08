@@ -199,7 +199,7 @@ $(function() {
 
                             var point = new google.maps.LatLng(thing.lat, thing.lng);
                             
-                            if (localSupport == true && thing.user_id == localStorage.getItem('activeUser')) {
+                            if (thing.user_id && localSupport == true && thing.user_id == localStorage.getItem('activeUser')) {
                                 var color = "blue";
                             } else if (thing.user_id) {
                                 var color = 'green';
