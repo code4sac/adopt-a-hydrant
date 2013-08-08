@@ -197,14 +197,15 @@ $(function() {
                         }
                         setTimeout(function () {
 
-                            var point = new google.maps.LatLng(thing.lat, thing.lng);
+                            var point = new google.maps.LatLng(thing.lat, thing.lng),
+                                color;
                             
-                            if (localSupport == true && thing.user_id == localStorage.getItem('activeUser')) {
-                                var color = "blue";
+                            if (localSupport == true && thing.user_id && thing.user_id == localStorage.getItem('activeUser')) {
+                                color = 'blue';
                             } else if (thing.user_id) {
-                                var color = 'green';
+                                color = 'green';
                             } else {
-                                var color = 'red';
+                                color = 'red';
                             }
 
                             addMarker(thing.id, point, color);
@@ -275,7 +276,10 @@ $(function() {
         });
     }
 
-    $('#combo-form input[type="radio"]').live('click', function () {
+
+    // new user or existing user radio sign up/sign in
+
+    $('#combo-form').on('click', 'input[type="radio"]', function () {
         var radioInput = $(this);
     
         console.log(radioInput.val());
@@ -309,6 +313,9 @@ $(function() {
             });
         }
     });
+
+    
+    // on sign in/sign up submit 
 
     $('#combo-form').live('submit', function () {
 
@@ -486,6 +493,10 @@ $(function() {
         }
         return false;
     });
+
+    
+    // adopt a thing
+
     $('#adoption_form').live('submit', function () {
         var submitButton = $("#adoption_form input[type='submit']");
         $(submitButton).attr("disabled", true);
@@ -501,7 +512,6 @@ $(function() {
                     'user_id': $('#thing_user_id').val(),
                     'name': $('#thing_name').val()
                 },
-
             },
             error: function (jqXHR) {
                 $(submitButton).attr("disabled", false);
@@ -531,6 +541,9 @@ $(function() {
         });
         return false;
     });
+
+    // abandon a thing
+
     $('#abandon_form').live('submit', function () {
     var answer = window.confirm("Are you sure you want to abandon this <%= I18n.t("defaults.thing") %>?")
         if (answer) {
@@ -766,6 +779,7 @@ $(function() {
     });
     $('#sign_in_form').live('submit', function () {
         var submitButton = $("#sign_in_form input[type='submit']");
+
         $(submitButton).attr("disabled", true);
         $.ajax({
             type: 'GET',
