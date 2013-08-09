@@ -234,15 +234,9 @@ you can use the generic selector below, but it's slower:
 
   #mobile-foot {
     height: 22px;
-    background: #c43c35;
-    background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
-    background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
-    background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
-    background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
-    background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
-    background-image: linear-gradient(top, #ee5f5b, #c43c35);
-    border-top: 1px solid #CCC;
+    background: #eb473f;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    box-shadow: inset 0px 1px 3px rgba(255,255,255,.35);
   }
   #mobile-foot-head {
     height: 22px;

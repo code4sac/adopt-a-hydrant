@@ -6,6 +6,10 @@ $(function() {
     }, 0);
 
     function mobilePage(){
+
+      // mobile page events and dom data for sidebar
+      // hides unnecessary form inputs from full size sidebar
+      // and shows it in #mobile-page div to simulate seperate pages
       
       var sidebar = $('#sidebar'),
           signIn = $('#user_sign_in_fields'),
@@ -17,9 +21,10 @@ $(function() {
           pageHeader = page.find('h4'),
           events;
 
+      // appends sidebar to #mobile-page on load
+
       page.append( sidebar );
       comboForm.data({'mobile': true});
-
       page.hide()
 
       events = {
@@ -68,6 +73,9 @@ $(function() {
     }
 
     function mobileNavBar(){
+
+      // mobile navigation show/hide events
+
       var nav = $('#mobile-nav'),
           navButton = $('#nav-button'),
           map = $('.map-container'),
@@ -75,10 +83,12 @@ $(function() {
           navWidth,
           events;
 
+      // sets amount to animate nav based on screen size
+
       if (screenWidth < 767 && screenWidth > 480)
       navWidth = '50%';
       else if (screenWidth < 480)
-      navWidth = '90%';
+      navWidth = screenWidth - 50;
 
       events = {
         showNav: function(){
@@ -102,8 +112,12 @@ $(function() {
       return events;
     }
 
+    // initialize mobile page and mobile navigation events
+
     var mobilePage = mobilePage();
     var mobileNavBar = mobileNavBar();
+
+    // show/hide mobile navigation
 
     $('#nav-button').click(function(){
         var nav = $('#mobile-nav'),
@@ -120,6 +134,8 @@ $(function() {
 
     });
 
+    // flash notifications
+
     $(document).on('flash', function(){
       $('.alert').addClass('mobile-flash').appendTo($('body'))
       
@@ -129,40 +145,43 @@ $(function() {
       }, 3500)
     })
 
+    // mobile navigation on click events
 
-    $('#mobile-nav').on('click', '.sign-up', function(e){
+    $('#mobile-nav').on('click', '.sign-up', function(){
         mobilePage.signUp()
         mobileNavBar.hideNav()
         $(this).addClass('selected-nav-item')
     })
 
-    $('#mobile-nav').on('click', '.sign-in', function(e){
+    $('#mobile-nav').on('click', '.sign-in', function(){
         mobilePage.signIn()
         mobileNavBar.hideNav()
         $(this).addClass('selected-nav-item')
     })
 
-    $('#mobile-nav').on('click', '#sign_out_link', function(e){
+    $('#mobile-nav').on('click', '#sign_out_link', function(){
+        // also triggers original event in main.js.erb
         mobileNavBar.hideNav()
         $(this).addClass('selected-nav-item')
     })
 
-    $('#mobile-nav').on('click', '#edit_profile_link', function(e){
+    $('#mobile-nav').on('click', '#edit_profile_link', function(){
+        // also triggers original event in main.js.erb
         mobileNavBar.hideNav()
         mobilePage.editProfile()
         $(this).addClass('selected-nav-item')
     })
 
-    $('#mobile-nav').on('click', '.find-hydrants', function(e){
+    $('#mobile-nav').on('click', '.find-hydrants', function(){
         mobileNavBar.hideNav()
         mobilePage.hidePage()
         $(this).addClass('selected-nav-item')
     })
 
-//     // Click Event to Close footer
-//     $('#close-footer').click(function() {
-//       mobileFooter.close();
-//     }); // end Close
+    // Click Event to Close footer
+    $('#close-footer').click(function() {
+      mobileFooter.close();
+    }); // end Close
 
 //     // Click event for login
 //     $('#mobile-login').click(function() {
