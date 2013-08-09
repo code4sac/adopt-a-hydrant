@@ -768,7 +768,7 @@ $(function() {
     $('#sign_out_link').live('click', function(e) {
         
         var link = $(this),
-            isMobile = $(e.target).hasClass('mobile_sign_out');
+            isMobile = $(e.target).closest('li').hasClass('mobile_sign_out');
 
         $(link).addClass('disabled');
 
@@ -810,7 +810,7 @@ $(function() {
                             localStorage.removeItem('activeUser')
 
                             $('#mobile-nav').html(data)
-                            $('#mobile-page').hide(100)
+                            $('#mobile-page').hide()
                         }
                     });
 

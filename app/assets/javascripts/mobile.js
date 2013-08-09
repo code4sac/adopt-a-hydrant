@@ -144,7 +144,6 @@ $(function() {
 
     $('#mobile-nav').on('click', '#sign_out_link', function(e){
         mobileNavBar.hideNav()
-        $('#combo-form').data('mobile', true)
         $(this).addClass('selected-nav-item')
     })
 
