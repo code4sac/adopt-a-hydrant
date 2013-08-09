@@ -279,7 +279,7 @@ $(function() {
 
     // new user or existing user radio sign up/sign in
 
-    $('#combo-form').on('click', 'input[type="radio"]', function () {
+    $('#combo-form ').on('click', 'input[type="radio"]', function () {
         var radioInput = $(this);
     
         console.log(radioInput.val());
@@ -317,7 +317,7 @@ $(function() {
     
     // on sign in/sign up submit 
 
-    $('#combo-form').live('submit', function () {
+    $('#combo-form').live('submit', function (e) {
 
         var submitButton = $("#combo-form input[type='submit']"),
             userName = $('#user_name'),
@@ -326,7 +326,8 @@ $(function() {
             userSMSNumber = $('#user_sms_number'),
             userOrganization = $('#user_organization'),
             userPassword = $('#user_password'),
-            userPasswordConfirmation = $('#user_password_confirmation');
+            userPasswordConfirmation = $('#user_password_confirmation'),
+            formData = $(this).data();
             
         submitButton.attr("disabled", true);
         
@@ -337,7 +338,7 @@ $(function() {
         } else {
             userEmail.parent().removeClass('error');
         }
-        if (!$(this).data('state') || $(this).data('state') === 'user_sign_up') {
+        if (!formData.state || formData.state === 'user_sign_up') {
             if (userName.val() === '') {
                 errors.push(userName);
                 userName.parent().addClass('error');
@@ -415,7 +416,7 @@ $(function() {
                     }
                 });
             }
-        } else if ($(this).data('state') === 'user_sign_in') {
+        } else if (formData.state === 'user_sign_in') {
             if (userPassword.val().length < 6 || userPassword.val().length > 20) {
                 errors.push(userPassword);
                 userPassword.parent().addClass('error');
@@ -448,6 +449,7 @@ $(function() {
                         if (localSupport == true)
                         localStorage.setItem('activeUser', data.id);
 
+                        if (formData.mobile != true )
                         $.ajax({
                             type: 'GET',
                             url: '/sidebar/search',
@@ -460,10 +462,25 @@ $(function() {
                                 $('#content').html(data);
                             }
                         });
+
+                        else if (formData.mobile == true)
+                        $.ajax({
+                            type: 'GET',
+                            url: '/mobile/nav',
+                            data: {
+                                'flash': {
+                                    'notice': "<%= I18n.t("notices.signed_in") %>"
+                                }
+                            },
+                            success: function (data) {
+                                $('#mobile-nav').html(data)
+                                $('#mobile-page').hide(100)
+                            }
+                        });
                     }
                 });
             }
-        } else if ($(this).data('state') === 'user_forgot_password') {
+        } else if (formData.state === 'user_forgot_password') {
             if (errors.length > 0) {
                 submitButton.attr("disabled", false);
                 errors[0].focus();
@@ -748,9 +765,13 @@ $(function() {
         }
         return false;
     });
-    $('#sign_out_link').live('click', function () {
-        var link = $(this);
+    $('#sign_out_link').live('click', function(e) {
+        
+        var link = $(this),
+            isMobile = $(e.target).hasClass('mobile_sign_out');
+
         $(link).addClass('disabled');
+
         $.ajax({
             type: 'DELETE',
             url: '/users/sign_out.json',
@@ -758,21 +779,41 @@ $(function() {
                 $(link).removeClass('disabled');
             },
             success: function (data) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/sidebar/combo_form',
-                    data: {
-                        'flash': {
-                            'warning': "<%= I18n.t("notices.signed_out") %>"
-                        }
-                    },
-                    success: function (data) {
-                        if (localSupport == true)
+                
+                if (isMobile != true)
+                    $.ajax({
+                        type: 'GET',
+                        url: '/sidebar/combo_form',
+                        data: {
+                            'flash': {
+                                'warning': "<%= I18n.t("notices.signed_out") %>"
+                            }
+                        },
+                        success: function (data) {
+                            if (localSupport == true)
                             localStorage.removeItem('activeUser')
-                        console.log('logged out')
-                        $('#content').html(data);
-                    }
-                });
+                            
+                            $('#content').html(data);
+                        }
+                    });
+                else if (isMobile == true)
+                    $.ajax({
+                        type: 'GET',
+                        url: '/mobile/nav',
+                        data: {
+                            'flash': {
+                                'warning': "<%= I18n.t("notices.signed_out") %>"
+                            }
+                        },
+                        success: function (data) {
+                            if (localSupport == true)
+                            localStorage.removeItem('activeUser')
+
+                            $('#mobile-nav').html(data)
+                            $('#mobile-page').hide(100)
+                        }
+                    });
+
             }
         });
         return false;

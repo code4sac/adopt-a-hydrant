@@ -15,6 +15,10 @@ AdoptAThing::Application.routes.draw do
     get :edit_profile , as: 'edit_profile'
   end
 
+  scope '/mobile', controller: :mobile do
+    get :nav, as: 'nav'
+  end
+
   resource :reminders
   resource :things
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

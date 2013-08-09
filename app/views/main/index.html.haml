@@ -1,11 +1,17 @@
+#mobile-notifications
+#mobile-page
+  .mobile-page-header
+    %h4
 .table
-  .table-row{:id => 'mobile-head', :class => 'mobile-gradient'}
-    #mobile-search
-      = render :partial => "mobile/search"
-    - if signed_in?
-      = render :partial => "mobile/signed_in"
-    - else
-      = render :partial => "mobile/sign_in"
+  #mobile-nav
+    = render :partial => "mobile/nav"
+  #mobile-head{:class => 'mobile-gradient'}
+    / #mobile-search
+    /   = render :partial => "mobile/search"
+    #search-button
+    #nav-button
+      %i.icon-nav
+    %h1 Adopt-a-Hydrant
   .table-row
     .table-cell.sidebar{:id => 'sidebar'}
       %h1
@@ -40,6 +46,6 @@
     .table-cell.map-container
       #map
         &nbsp;
-  .table-row{:id => 'mobile-foot'}
-    = render :partial => "mobile/footer"
+  / .table-row{:id => 'mobile-foot'}
+  /   = render :partial => "mobile/footer"
 

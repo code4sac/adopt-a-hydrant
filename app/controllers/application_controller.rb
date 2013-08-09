@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_flash_from_params
   before_filter :set_locale
+  layout proc{|c| c.request.xhr? ? false : "application" }
 
 protected
 
