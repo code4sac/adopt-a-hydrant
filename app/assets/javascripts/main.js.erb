@@ -809,6 +809,8 @@ $(function() {
                             if (localSupport == true)
                             localStorage.removeItem('activeUser')
 
+                            $("#combo-form")[0].reset();
+                            $("#combo-form input[type='submit']").attr("disabled", false);
                             $('#mobile-nav').html(data)
                             $('#mobile-page').hide()
                         }

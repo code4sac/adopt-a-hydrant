@@ -63,20 +63,17 @@ you can use the generic selector below, but it's slower:
   }
 
   #sidebar {
-    display: block;
-    width: 250px;
-    height: auto;
-    margin: 20px auto 20px auto;
-    border: none;
+    display: none;
   }
 
   .form-actions {
     background: transparent;
     margin: 0;
+    padding: 15px 0;
     border: none;
   }
 
-  #sidebar h1, #tagline, #logos, #feedback, #common_fields .control-group:last-child, #back_link {
+  #common_fields .control-group:last-child, #back_link {
     display: none;
   }
 
@@ -89,6 +86,12 @@ you can use the generic selector below, but it's slower:
     top: 0px;
     left: 0;
     z-index: 1;
+  }
+
+  .form-wrapper {
+    width: 210px;
+    height: auto;
+    margin: 20px auto 20px auto;
   }
 
   .mobile-flash, .mobile-page-header {

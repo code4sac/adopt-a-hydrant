@@ -11,7 +11,7 @@ $(function() {
       // hides unnecessary form inputs from full size sidebar
       // and shows it in #mobile-page div to simulate seperate pages
       
-      var sidebar = $('#sidebar'),
+      var comboForm = $('#combo_form'),
           signIn = $('#user_sign_in_fields'),
           signUp = $('#user_sign_up_fields'),
           forgotPass = $('#user_forgot_password_fields'),
@@ -23,7 +23,7 @@ $(function() {
 
       // appends sidebar to #mobile-page on load
 
-      page.append( sidebar );
+      comboForm.appendTo( $('.form-wrapper') )
       comboForm.data({'mobile': true});
       page.hide()
 
