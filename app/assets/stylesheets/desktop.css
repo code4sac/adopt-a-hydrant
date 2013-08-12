@@ -7,4 +7,7 @@
     display: none;
     border-top: 1px solid #CCC;
   }
+  #mobile-page, #mobile-nav {
+  	display: none;
+  }
 }
