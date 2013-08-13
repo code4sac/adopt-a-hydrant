@@ -9,7 +9,7 @@
   .table-row
     .table-cell.sidebar{:id => 'sidebar'}
       %h1
-        = image_tag "logos/adopt-a-hydrant.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+        = image_tag "logos/adopt-a-thing.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
       %p.alert-message.block-message#tagline
         = t("defaults.tagline")
       #content
@@ -33,6 +33,10 @@
               = "#{t("sponsors.mayor.name")},"
               %em
                 = t("sponsors.mayor.title")
+        %p
+          %a{:href => "http://codeforsacramento.org/"}
+            = image_tag "logos/code4sac.png"
+
       #feedback
         %p
           %a{:href => URI.escape("mailto:adoptahydrant@cityofboston.gov?subject=#{t("titles.main", :thing => t("defaults.thing").titleize)} - #{t("links.feedback").titleize}")}

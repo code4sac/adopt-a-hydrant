@@ -1,7 +1,9 @@
 development: &DEVELOPMENT
   adapter: postgresql
-  database: adopt_a_thing_development
+  database: adopt_a_hydrant_development
   host: localhost
+  username: adoptahydrant
+  password: notsecure
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
