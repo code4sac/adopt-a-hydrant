@@ -42,9 +42,9 @@ $(function() {
 
 
     var map = new google.maps.Map(document.getElementById("map"), mapOptions),
-        size = new google.maps.Size(27.0, 37.0),
-        redSpriteOrigin = new google.maps.Point(0, 37),
-        blueSpriteOrigin = new google.maps.Point(0, 74),
+        size = new google.maps.Size(27.0, 36.0),
+        redSpriteOrigin = new google.maps.Point(0, 36),
+        blueSpriteOrigin = new google.maps.Point(0, 72),
         origin = new google.maps.Point(0, 0),
         anchor = new google.maps.Point(13.0, 18.0),
         localSupport = supportsStorage(),
@@ -58,7 +58,7 @@ $(function() {
 
 
     if (window.devicePixelRatio > 1) {
-        scaledSize = new google.maps.Size(27.0, 111.0);
+        scaledSize = new google.maps.Size(27.0, 109.0);
         imageSprite = 'marker-highres.png';
     } else {
         scaledSize = null;
