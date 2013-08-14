@@ -5,60 +5,77 @@ $(function() {
       scrollTo(0, 1);
     }, 0);
 
+
+
     function mobilePage(){
 
       // mobile page events and dom data for sidebar
       // hides unnecessary form inputs from full size sidebar
       // and shows it in #mobile-page div to simulate seperate pages
       
-      var comboForm = $('#combo_form'),
-          signIn = $('#user_sign_in_fields'),
-          signUp = $('#user_sign_up_fields'),
-          forgotPass = $('#user_forgot_password_fields'),
-          comboForm = $('#combo-form'),
-          nav = $('#mobile-nav'),
-          page = $('#mobile-page'),
+      var page = $('#mobile-page'),
+          formWrapper = $('.form-wrapper'),
           pageHeader = page.find('h4'),
           events;
 
-      // appends sidebar to #mobile-page on load
-
-      comboForm.appendTo( $('.form-wrapper') )
-      comboForm.data({'mobile': true});
-      page.hide()
+      // click events for mobile nav
 
       events = {
         signIn: function(){
-          pageHeader.text('Sign In')
-          page.show()
-          comboForm.data({'state': 'user_sign_in', 'mobile': true});
-          forgotPass.hide()
-          signUp.hide()
-          signIn.show()
+          $.ajax({
+            type: 'GET',
+            url: '/sidebar/combo_form',
+            success: function(data) {
+              formWrapper.html(data);
+              page.show()
+              $('#combo-form').data({'state': 'user_sign_in', 'mobile': true});
+              $('#user_sign_in_fields').show()
+              $('#user_forgot_password_fields').hide()
+              $('#user_sign_up_fields').hide()
+              pageHeader.text('Sign In')
+            } 
+          });
         },
         signUp: function(){
-          pageHeader.text('Sign Up')
-          page.show()
-          comboForm.data({'state': 'user_sign_up', 'mobile': true});
-          forgotPass.hide()
-          signIn.hide()
-          signUp.show()
+          $.ajax({
+            type: 'GET',
+            url: '/sidebar/combo_form',
+            success: function(data) {
+              formWrapper.html(data);
+              page.show()
+              $('#combo-form').data({'state': 'user_sign_in', 'mobile': true});
+              $('#user_sign_in_fields').hide()
+              $('#user_forgot_password_fields').hide()
+              $('#user_sign_up_fields').show()
+              pageHeader.text('Sign Up') 
+            } 
+          });
         },
         forgotPass: function(){
-          comboForm.data({'state': 'user_forgot_password', 'mobile': true});
-          signIn.slideUp();
+          $('#combo-form').data({'state': 'user_forgot_password', 'mobile': true});
+          $('#user_sign_in_fields').show().slideUp();
           
-          forgotPass.slideDown(function () {    
+          $('#user_forgot_password_fields').slideDown(function () {    
             $('#user_remembered_password_link').click(function () {
-                comboForm.data('state', 'user_sign_in');
-                forgotPass.slideUp();
-                signIn.slideDown(function(){});
+                $('#combo-form').data('state', 'user_sign_in');
+                $('#user_forgot_password_fields').slideUp();
+                $('#user_sign_in_fields').slideDown(function(){});
             });
           });
         },
         editProfile: function(){
-          pageHeader.text('Edit Profile')
-          page.show()
+          $.ajax({
+            type: 'GET',
+            url: '/users/edit',
+            error: function (jqXHR) {
+              $(link).removeClass('disabled');
+            },
+            success: function (data) {
+              formWrapper.html(data);
+              page.show()
+              pageHeader.text('Edit Profile')
+            }
+          });
         },
         hidePage: function(){
           page.hide()
@@ -80,6 +97,9 @@ $(function() {
           navButton = $('#nav-button'),
           map = $('.map-container'),
           screenWidth = $(document).width(),
+          animationSpeed = 100,
+          navSpeed,
+          pageSpeed,
           navWidth,
           events;
 
@@ -87,24 +107,43 @@ $(function() {
 
       if (screenWidth < 767 && screenWidth > 480)
       navWidth = '50%';
-      else if (screenWidth < 480)
+      else if (screenWidth <= 480)
       navWidth = screenWidth - 50;
+      
+      nav.css('width', navWidth)
 
       events = {
         showNav: function(){
           navButton.addClass('nav-active')
-          nav.delay(10).css('width', navWidth).animate({'left':'0'}, 100, 'linear')
-          $('body').css('overflow','hidden')
+          $('body').css('overflow-x','hidden')
           $('.selected-nav-item').removeClass('selected-nav-item')
-          $('.map-container, #mobile-head, #mobile-page, #mobile-notification').animate({'left': navWidth }, 100, 'linear')
+          // $('.map-container, #mobile-head, #mobile-page, #mobile-notification').animate({'left': navWidth }, 240, 'easeOutExpo')
+          $('.map-container, #mobile-head, #mobile-page, #mobile-notification').animate({'left': navWidth }, {
+            duration: 240, 
+            easing: 'easeOutExpo',
+            progress: function(){
+              nav.css('left', (map.offset().left - nav.width() - 1))
+            },
+          })
+
           $('#mobile-head').css('border-top-left-radius','6px')
         },
         hideNav: function(){
           navButton.removeClass('nav-active')
-          nav.delay(10).animate({'left':'-100%'}, 150, 'linear')
-          $('.map-container, #mobile-head, #mobile-page, #mobile-notification').animate({'left':'0%'}, 150, 'linear')
-          $('#mobile-head').css('border-top-left-radius','0px')
-          $('body').css('overflow','auto')
+          
+          $('.map-container, #mobile-head, #mobile-page, #mobile-notification').animate({'left': '0' }, {
+            duration: 320, 
+            easing: 'easeInOutCirc',
+            progress: function(){
+              nav.css('left', (map.position().left - nav.width() - 1))
+            },
+            complete: function(){
+              //nav.css('left', nav.width()*-1)
+              $('#mobile-head').css('border-top-left-radius','0px')
+              $('body').css('overflow-x','auto')
+            }
+          })
+          
           
         },
       }
@@ -157,6 +196,10 @@ $(function() {
         mobilePage.signIn()
         mobileNavBar.hideNav()
         $(this).addClass('selected-nav-item')
+    })
+
+    $('#mobile-page').on('click', '#user_forgot_password_link', function(){
+        mobilePage.forgotPass()
     })
 
     $('#mobile-nav').on('click', '#sign_out_link', function(){
