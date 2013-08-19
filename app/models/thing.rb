@@ -4,12 +4,17 @@ class Thing < ActiveRecord::Base
   validates_uniqueness_of :city_id, allow_nil: true
   validates_presence_of :lat, :lng
   belongs_to :user
+  belongs_to :type
   has_many :reminders
 
   def self.find_closest(lat, lng, limit=10)
     query = <<-SQL
-      SELECT *, (3959 * ACOS(COS(RADIANS(?)) * COS(RADIANS(lat)) * COS(RADIANS(lng) - RADIANS(?)) + SIN(RADIANS(?)) * SIN(RADIANS(lat)))) AS distance
+      SELECT  things.*
+        ,     (3959 * ACOS(COS(RADIANS(?)) * COS(RADIANS(lat)) * COS(RADIANS(lng) - RADIANS(?)) + SIN(RADIANS(?)) * SIN(RADIANS(lat)))) AS distance
+        ,     types.title AS thing_title
+        ,     types.action AS thing_action
       FROM things
+      LEFT JOIN types ON things.type_id = types.id
       ORDER BY distance
       LIMIT ?
       SQL
