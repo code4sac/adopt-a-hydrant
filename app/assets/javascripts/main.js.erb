@@ -11,14 +11,6 @@ $(function() {
         }, 0);
     }
 
-    function supportsStorage() {
-        try {
-            return 'localStorage' in window && window['localStorage'] !== null;
-        } catch (e) {
-            return false;
-        }
-    }
-
     //var center = new google.maps.LatLng(38.575067, -121.487761);
     var center = new google.maps.LatLng(42.358431, -71.059773);
 
@@ -47,13 +39,11 @@ $(function() {
         blueSpriteOrigin = new google.maps.Point(0, 72),
         origin = new google.maps.Point(0, 0),
         anchor = new google.maps.Point(13.0, 18.0),
-        localSupport = supportsStorage(),
         markersArray = [],
         imageSprite,
         scaledSize,
         redMarkerImage,
         greenMarkerImage,
-        blueMarkerImage,
         markerShadowImage;
 
 
@@ -81,14 +71,6 @@ $(function() {
         url: '/assets/' + imageSprite
     }
 
-    blueMarkerImage = {
-        anchor: anchor,
-        origin: blueSpriteOrigin,
-        scaledSize: scaledSize,
-        size: size,
-        url: '/assets/' + imageSprite
-    }
-
     markerShadowImage = new google.maps.MarkerImage('<%= image_path'markers/shadow.png'%>',
         new google.maps.Size(46.0, 37.0),
         origin,
@@ -107,9 +89,7 @@ $(function() {
             marker,
             infoWindow;
 
-        if (color === 'blue') {
-            image = blueMarkerImage;
-        } else if (color === 'green') {
+        if (color === 'green') {
             image = greenMarkerImage;
         } else if (color === 'red') {
             image = redMarkerImage;
@@ -200,9 +180,7 @@ $(function() {
                             var point = new google.maps.LatLng(thing.lat, thing.lng),
                                 color;
                             
-                            if (localSupport == true && thing.user_id && thing.user_id == localStorage.getItem('activeUser')) {
-                                color = 'blue';
-                            } else if (thing.user_id) {
+                            if (thing.user_id) {
                                 color = 'green';
                             } else {
                                 color = 'red';
@@ -446,9 +424,6 @@ $(function() {
                     },
                     success: function (data) {
 
-                        if (localSupport == true)
-                        localStorage.setItem('activeUser', data.id);
-
                         if (formData.mobile != true )
                         $.ajax({
                             type: 'GET',
@@ -547,7 +522,7 @@ $(function() {
                         activeInfoWindow.close();
                         activeInfoWindow.setContent(data);
                         activeInfoWindow.open(map, activeMarker);
-                        activeMarker.setIcon(blueMarkerImage);
+                        activeMarker.setIcon(greenMarkerImage);
                         activeMarker.setAnimation(google.maps.Animation.BOUNCE);
                         window.setTimeout(function () {
                             activeMarker.setAnimation()
@@ -790,9 +765,6 @@ $(function() {
                             }
                         },
                         success: function (data) {
-                            if (localSupport == true)
-                            localStorage.removeItem('activeUser')
-                            
                             $('#content').html(data);
                         }
                     });
@@ -806,8 +778,6 @@ $(function() {
                             }
                         },
                         success: function (data) {
-                            if (localSupport == true)
-                            localStorage.removeItem('activeUser')
                      
                             if ($("#combo-form").is('*')){
                                 $("#combo-form")[0].reset();
