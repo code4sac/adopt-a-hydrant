@@ -77,10 +77,10 @@ en:
     adopted: "%{thing_name} has been adopted"
     byline: "by %{name}"
     edit_profile: "Edit your Profile"
-    main: "Adopt-a-%{thing}"
+    main: "Adopt %{thing}"
     ofline: "of %{organization}"
     sign_in: "Sign in to adopt this %{thing}"
-    thank_you: "Thank you for adopting this %{thing}!"
+    thank_you: "Thank you for adopting this %{thing}"
     tos: "Terms of Service"
   sponsors:
     built: "Built in Boston"
