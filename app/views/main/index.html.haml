@@ -33,11 +33,9 @@
               = "#{t("sponsors.mayor.name")},"
               %em
                 = t("sponsors.mayor.title")
-        %p
+        #col3
           %a{:href => "http://codeforsacramento.org/"}
             = image_tag "logos/code4sac.png"
-
-      #feedback
         %p
           %a{:href => URI.escape("mailto:adoptahydrant@cityofboston.gov?subject=#{t("titles.main", :thing => t("defaults.thing").titleize)} - #{t("links.feedback").titleize}")}
             = t("links.feedback")

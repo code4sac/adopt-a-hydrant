@@ -136,6 +136,7 @@ a.btn {
 
 .sidebar #logos {
   height: 100px;
+  width: 252px;
 }
 
 .sidebar #logos #col1 {
@@ -153,6 +154,18 @@ a.btn {
   float: left;
   margin-left: 10px;
   width: 100px;
+}
+
+.sidebar #logos #col3 {
+  width: 200px;
+  margin-top: 20px;
+  position: relative;
+  clear: both;
+}
+
+.sidebar #logos #col3 p {
+  margin-top: 10px;
+  text-align: center;
 }
 
 .sidebar #mayor {
