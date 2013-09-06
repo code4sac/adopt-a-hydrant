@@ -1,0 +1,6 @@
+.mobile-page-header
+  %h4 Sign In
+.content-wrapper
+  = form_for :user, :html => {:id => "combo-form", :class => "form-vertical"} do |f|
+    = render :partial => "sidebar/common_fields", :locals => { :f => f }
+    = render :partial => "sidebar/user_sign_in", :locals => { :f => f }

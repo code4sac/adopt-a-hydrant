@@ -1,19 +1,19 @@
 @media (max-width: 767px) {
   
 @font-face {
-  font-family: 'icomoon';
-  src:url('mobileiconfont/icomoon.eot');
-  src:url('mobileiconfont/icomoon.eot?#iefix') format('embedded-opentype'),
-    url('mobileiconfont/icomoon.woff') format('woff'),
-    url('mobileiconfont/icomoon.ttf') format('truetype'),
-    url('mobileiconfont/icomoon.svg#icomoon') format('svg');
+  font-family: 'fontawesome';
+  src:url('mobileiconfont/fontawesome.eot');
+  src:url('mobileiconfont/fontawesome.eot?#iefix') format('embedded-opentype'),
+    url('mobileiconfont/fontawesome.woff') format('woff'),
+    url('mobileiconfont/fontawesome.ttf') format('truetype'),
+    url('mobileiconfont/fontawesome.svg#fontawesome') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
-  font-family: 'icomoon';
+  font-family: 'fontawesome';
   content: attr(data-icon);
   speak: none;
   font-weight: normal;
@@ -21,6 +21,7 @@
   text-transform: none;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -29,8 +30,8 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.icon-search, .icon-enter, .icon-exit, .icon-nav, .icon-user, .icon-map-marker {
-  font-family: 'icomoon';
+.icon-reorder, .icon-signin, .icon-signout, .icon-search, .icon-user, .icon-map-marker, .icon-hydrant, .icon-info-sign, .icon-ok, .icon-remove {
+  font-family: 'fontawesome';
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -39,23 +40,35 @@ you can use the generic selector below, but it's slower:
   line-height: 1;
   -webkit-font-smoothing: antialiased;
 }
+.icon-reorder:before {
+  content: "\f0c9";
+}
+.icon-signin:before {
+  content: "\f090";
+}
+.icon-signout:before {
+  content: "\f08b";
+}
 .icon-search:before {
   content: "\f002";
 }
-.icon-enter:before {
-  content: "\e000";
-}
-.icon-exit:before {
-  content: "\e001";
-}
-.icon-nav:before {
-  content: "\f0c9";
-}
 .icon-user:before {
-  content: "\e002";
+  content: "\f007";
 }
 .icon-map-marker:before {
-  content: "\e003";
+  content: "\f041";
+}
+.icon-hydrant:before {
+  content: "\e000";
+}
+.icon-info-sign:before {
+  content: "\f05a";
+}
+.icon-ok:before {
+  content: "\f00c";
+}
+.icon-remove:before {
+  content: "\f00d";
 }
 
   body {
@@ -78,20 +91,76 @@ you can use the generic selector below, but it's slower:
   }
 
   #mobile-page {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     min-height: 100%;
-    position: absolute;
-    background: white;
-    margin-top: 50px;
-    top: 0px;
-    left: 0;
-    z-index: 1;
-    display: none;
+    transition: left .2s;
+    -moz-transition: left .2s;
+    -webkit-transition: left .2s;
+    -o-transition: left .2s;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
   }
 
-  .form-wrapper {
+  #mobile-nav {
+    transition: left .2s;
+    -moz-transition: left .2s;
+    -webkit-transition: left .2s;
+    -o-transition: left .2s;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+  }
+  
+  .map-container {
+    position: relative;
+    top: 50px;
+    z-index: -1;
+    transition: left .2s;
+    -moz-transition: left .2s;
+    -webkit-transition: left .2s;
+    -o-transition: left .2s;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+  }
+
+  #mobile-nav ul {
+    transition: left .2s;
+    -moz-transition: left .2s;
+    -webkit-transition: left .2s;
+    -o-transition: left .2s;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+  }
+
+  .slide {
+    left: 270px !important;
+  }
+  .slide #mobile-page {
+    z-index: 10 !important;
+  }
+  .slide-nav {
+    left: 0px;
+  }
+  
+  #page-contents {
+    background: white;
+    position: absolute;
+    min-height: 100%;
+    width: 100%;
+    top: 50px;
+  }
+  .content-wrapper {
     width: 210px;
-    height: auto;
     margin: 20px auto 20px auto;
   }
 
@@ -103,8 +172,10 @@ you can use the generic selector below, but it's slower:
   }
 
   .mobile-flash {
+    width: 100%;
     position: absolute;
     top: 50px;
+    padding: 10px 0;
     border-radius: 0px;
     border-left: 0;
     border-right: 0;
@@ -112,40 +183,41 @@ you can use the generic selector below, but it's slower:
   }
 
   .mobile-page-header {
-    background: rgba(0,0,0,.1);
-    border-bottom: 1px solid rgba(0,0,0,.045);
+    background: rgb(255,255,255); /* Old browsers */
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(255,255,255,1)), to(rgba(240,240,240,1)));
+  background: -webkit-linear-gradient(rgba(255,255,255,1) 0%, rgba(240,240,240,1) 100%);
+  background: -moz-linear-gradient(rgba(255,255,255,1) 0%, rgba(240,240,240,1) 100%);
+  background: -o-linear-gradient(rgba(255,255,255,1) 0%, rgba(240,240,240,1) 100%);
+  background: linear-gradient(rgba(255,255,255,1) 0%, rgba(240,240,240,1) 100%); /* FF3.6+ */ /* Chrome,Safari4+ */ /* Chrome10+,Safari5.1+ */ /* Opera 11.10+ */ /* IE10+ */ /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    border-bottom: 1px solid rgba(0,0,0,.13);
     box-shadow: inset 0px 10px 30px rgba(255,255,255,.35);
     color: white;
   }
 
   .mobile-page-header h4 {
-    font-weight: 500;
+    font-weight: 700;
     line-height: 1.4em;
-    color: rgba(0,0,0,.6);
+    color: rgba(0,0,0,.64);
   }
 
   #mobile-head {
     height: 38px;
-    padding: 6px;
-    position: relative;
+    width: 100%;
+    padding: 6px 0;
+    position: fixed;
+    top: 0;
     z-index: 10;
     background: #eb473f;
     border-bottom: 1px solid rgba(0,0,0,.2);
     box-shadow: inset 0px 1px 3px rgba(255,255,255,.35);
-    /*background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
-    background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
-    background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
-    background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
-    background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
-    background-image: linear-gradient(top, #ee5f5b, #c43c35);*/
   }
 
   #mobile-head h1 {
     margin-top: 0;
     text-align: center;
     color: white;
-    line-height: 1.7em;
+    line-height: 1.8em;
     font-size: 1.6em;
     text-shadow: 1px 1px 1px rgba(0,0,0,.2);
   }
@@ -153,25 +225,28 @@ you can use the generic selector below, but it's slower:
   #nav-button, #search-button {
     width: 37px;
     height: 36px;
-    padding: 0;
+    margin: 0 6px;
     background: #dd423e;
     border: 1px solid rgba(0,0,0,.1);
     box-shadow: 0px 1px 1px rgba(255,255,255,.2), inset 0px 0px 10px rgba(255,255,255,.1), inset 0px 0px 1px rgba(0,0,0,.1);
-    border-radius: 4px;
-    position: relative;
-    z-index: 15;
+    border-radius: 3px;
   }
 
   #nav-button {
     float: left;
   }
 
-  #nav-button i {
+  #nav-button i, #search-button i {
     color: white;
     font-size: 28px;
     position: relative;
     top: 3px;
     left: 6px;
+  }
+
+  #search-button i {
+    left: 8px;
+    font-size: 27px;
   }
 
   #nav-button.nav-active {
@@ -183,42 +258,54 @@ you can use the generic selector below, but it's slower:
   }
   
   #mobile-nav {
-    position: absolute;
-    top: 0px;
-    left: -100%;
-    z-index: 10;
-    width: 90%;
+    width: 270px;
+    left: -270px; 
+    position: fixed;
+    top: 0;
     height: 100%;
   }
 
   #mobile-nav ul {
     margin: 0;
     height: 100%;
+    width: 270px;
     list-style: none;
-    background: #383b3c;
-    //border-right: 1px solid rgba(0,0,0,.5);
+    background: #313436;
     box-shadow: inset -5px 0px 20px rgba(0,0,0,.2);
     display: block;
+    position: absolute;
+  }
+
+  .slide-nav ul {
+    left: 270px !important;
   }
 
   #mobile-nav li {
-    padding: 15px 5%;
+    padding: 15px;
     height: 20px;
     font-size: 1.3em;
     color: #e2edef;
     background: #3c4041;
     box-shadow: inset -20px -1px 30px -16px rgba(0,0,0,.2);
-    border-bottom: 1px solid rgba(0,0,0,.1);
+    text-shadow: 1px 1px 1px rgba(0,0,0,.2);
+    border-bottom: 1px solid rgba(0,0,0,.15);
   }
 
   #mobile-nav li:first-child {
     background: #464B4D;
-    border-bottom: 1px solid #383b3c;
+    box-shadow: inset 0px 10px 23px rgba(255,255,255,.14);
+    border-bottom: 1px solid rgba(0,0,0,.22);
+  }
+
+  #mobile-nav li:last-child {
+    border-bottom: 0;
   }
 
   #mobile-nav li i {
-    font-size: 16px;
-    margin-right: 10px;
+    font-size: 24px;
+    position: relative;
+    top: -3px;
+    margin-right: 24px;
   }
 
   #mobile-nav .icon-map-marker {
@@ -228,68 +315,19 @@ you can use the generic selector below, but it's slower:
   }
   
   #mobile-search {
-    padding-top: 12px !important;
-    padding-bottom: 18px !important;
+    padding-top: 10px !important;
+    padding-bottom: 20px !important;
   }
 
   #address {
-    width: 91.5%;
+    width: 210px;
+    height: 20px;
+    border-radius: 20px;
   }
 
   .selected-nav-item {
     background: #dd423e !important;
   }
   
-  .map-container {
-    position: relative;
-  }
 
-  #mobile-foot {
-    height: 22px;
-    background: #eb473f;
-    border-bottom: 1px solid rgba(0,0,0,.2);
-    box-shadow: inset 0px 1px 3px rgba(255,255,255,.35);
-  }
-  #mobile-foot-head {
-    height: 22px;
-    width: 100%;
-    border-bottom: 1px solid #CCC;
-  }
-  #mobile-foot-head-title {
-    padding-left: 8px;
-    padding-top: 3px;
-    z-index: 99;
-  }
-  #foot_container {
-    background: #fff;
-  }
-  #mobile-login {
-    width: 18%;
-    height: 100%;
-    border-right: 1px solid #CCC;
-    border-left: 1px solid #CCC;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 120%;
-    font-weight: bolder;
-    display: inline-block;
-  }
-  #mobile-logout {
-    width: 18%;
-    height: 100%;
-    border-right: 1px solid #CCC;
-    border-left: 1px solid #CCC;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 120%;
-    font-weight: bolder;
-    display: inline-block;
-  }
-
-  .btn {
-  }
-  .btn-search {
-    width: 47px !important;
-    margin-top: 0px !important;
-  }
 }

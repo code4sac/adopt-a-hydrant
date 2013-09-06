@@ -5,49 +5,37 @@ $(function() {
       scrollTo(0, 1);
     }, 0);
 
-
-
     function mobilePage(){
 
-      // mobile page events and dom data for sidebar
-      // hides unnecessary form inputs from full size sidebar
-      // and shows it in #mobile-page div to simulate seperate pages
+      // mobile page events and ajax calls
       
-      var page = $('#mobile-page'),
-          formWrapper = $('.form-wrapper'),
+      var page = $('#page-contents'),
+          formWrapper = $('.content-wrapper'),
           pageHeader = page.find('h4'),
+          mobilePage = $('#mobile-page'),
+          mapContainer = $('.map-container'),
           events;
-
-      // click events for mobile nav
 
       events = {
         signIn: function(){
+          events.hideNav();
           $.ajax({
             type: 'GET',
-            url: '/sidebar/combo_form',
+            url: '/mobile/sign_in',
             success: function(data) {
-              formWrapper.html(data);
-              page.show()
+              page.show().html(data);
               $('#combo-form').data({'state': 'user_sign_in', 'mobile': true});
-              $('#user_sign_in_fields').show()
-              $('#user_forgot_password_fields').hide()
-              $('#user_sign_up_fields').hide()
-              pageHeader.text('Sign In')
             } 
-          });
+          });  
         },
         signUp: function(){
+          events.hideNav();
           $.ajax({
             type: 'GET',
-            url: '/sidebar/combo_form',
+            url: '/mobile/sign_up',
             success: function(data) {
-              formWrapper.html(data);
-              page.show()
+              page.show().html(data);
               $('#combo-form').data({'state': 'user_sign_in', 'mobile': true});
-              $('#user_sign_in_fields').hide()
-              $('#user_forgot_password_fields').hide()
-              $('#user_sign_up_fields').show()
-              pageHeader.text('Sign Up') 
             } 
           });
         },
@@ -66,22 +54,29 @@ $(function() {
         editProfile: function(){
           $.ajax({
             type: 'GET',
-            url: '/users/edit',
-            error: function (jqXHR) {
-              $(link).removeClass('disabled');
-            },
+            url: '/mobile/edit_profile',
             success: function (data) {
-              formWrapper.html(data);
-              page.show()
-              pageHeader.text('Edit Profile')
+              page.show().html(data)
+              // $('.form-wrapper').html(data);
+              // page.find('h4').text('Edit Profile')
             }
           });
         },
-        hidePage: function(){
-          page.hide()
+        about: function(){
+          events.hideNav();
+          $.ajax({
+            type: 'GET',
+            url: '/mobile/page',
+            success: function (data) {
+              page.show().html(data)
+            }
+          });
         },
-        showPage: function(){
-          page.show()
+        hideNav: function(){
+          $('.map-container, #mobile-page').removeClass('slide');
+        },
+        hidePage: function(){
+          $('#page-contents').hide();
         }
       }
 
@@ -94,57 +89,19 @@ $(function() {
       // mobile navigation show/hide events
 
       var nav = $('#mobile-nav'),
-          navButton = $('#nav-button'),
           map = $('.map-container'),
-          screenWidth = $(document).width(),
-          animationSpeed = 100,
-          navSpeed,
-          pageSpeed,
-          navWidth,
+          page = $('.map-container, #mobile-page'),
           events;
-
-      // sets amount to animate nav based on screen size
-
-      if (screenWidth < 767 && screenWidth > 480)
-      navWidth = '50%';
-      else if (screenWidth <= 480)
-      navWidth = screenWidth - 50;
-      
-      nav.css('width', navWidth)
 
       events = {
         showNav: function(){
-          navButton.addClass('nav-active')
-          $('body').css('overflow-x','hidden')
-          $('.selected-nav-item').removeClass('selected-nav-item')
-          // $('.map-container, #mobile-head, #mobile-page, #mobile-notification').animate({'left': navWidth }, 240, 'easeOutExpo')
-          $('.map-container, #mobile-head, #mobile-page, #mobile-notification').animate({'left': navWidth }, {
-            duration: 240, 
-            easing: 'easeOutExpo',
-            progress: function(){
-              nav.css('left', (map.offset().left - nav.width() - 1))
-            },
-          })
-
-          $('#mobile-head').css('border-top-left-radius','6px')
+            nav.addClass('slide-nav')
+            page.addClass('slide')   
         },
         hideNav: function(){
-          navButton.removeClass('nav-active')
-          
-          $('.map-container, #mobile-head, #mobile-page, #mobile-notification').animate({'left': '0' }, {
-            duration: 320, 
-            easing: 'easeInOutCirc',
-            progress: function(){
-              nav.css('left', (map.position().left - nav.width() - 1))
-            },
-            complete: function(){
-              //nav.css('left', nav.width()*-1)
-              $('#mobile-head').css('border-top-left-radius','0px')
-              $('body').css('overflow-x','auto')
-            }
-          })
-          
-          
+            nav.removeClass('slide-nav')
+            page.removeClass('slide')
+            map.css('z-index','-1') 
         },
       }
 
@@ -159,18 +116,19 @@ $(function() {
     // show/hide mobile navigation
 
     $('#nav-button').click(function(){
-        var nav = $('#mobile-nav'),
-            navButton = $('#nav-button'),
-            map = $('.map-container');
+        var map = $('.map-container'),
+            page = $('#page-contents');
 
-        if (navButton.hasClass('nav-active') == false){
-          mobileNavBar.showNav()
-          map.on('click',  mobileNavBar.hideNav )
-        } else if (navButton.hasClass('nav-active') == true) {
+        if (map.hasClass('slide') == false){
+          mobileNavBar.showNav();
+          map.on('click',  mobileNavBar.hideNav );
+          page.on('click',  mobileNavBar.hideNav );
+        } else if (map.hasClass('slide') == true) {
           mobileNavBar.hideNav()
           map.off('click')
+          page.off('click')
         }
-
+        
     });
 
     // flash notifications
@@ -179,8 +137,8 @@ $(function() {
       $('.alert').addClass('mobile-flash').appendTo($('body'))
       
       setTimeout(function(){
-        $('.alert').slideUp(75).fadeOut()
-        $('body').trigger('click.alert.data-api')
+        $('.alert').slideUp(75).fadeOut();
+        $('body').trigger('click.alert.data-api');
       }, 3500)
     })
 
@@ -189,13 +147,11 @@ $(function() {
     $('#mobile-nav').on('click', '.sign-up', function(){
         mobilePage.signUp()
         mobileNavBar.hideNav()
-        $(this).addClass('selected-nav-item')
     })
 
     $('#mobile-nav').on('click', '.sign-in', function(){
         mobilePage.signIn()
         mobileNavBar.hideNav()
-        $(this).addClass('selected-nav-item')
     })
 
     $('#mobile-page').on('click', '#user_forgot_password_link', function(){
@@ -205,100 +161,27 @@ $(function() {
     $('#mobile-nav').on('click', '#sign_out_link', function(){
         // also triggers original event in main.js.erb
         mobileNavBar.hideNav()
-        $(this).addClass('selected-nav-item')
     })
 
-    $('#mobile-nav').on('click', '#edit_profile_link', function(){
+    $('#mobile-nav').on('click', '.edit-profile', function(){
         // also triggers original event in main.js.erb
         mobileNavBar.hideNav()
         mobilePage.editProfile()
-        $(this).addClass('selected-nav-item')
     })
 
-    $('#mobile-nav').on('click', '.find-hydrants', function(){
-        mobileNavBar.hideNav()
+    $(document).on('click', '.find-hydrants', function(){
         mobilePage.hidePage()
-        $(this).addClass('selected-nav-item')
+        mobileNavBar.hideNav()
+        $('.map-container').css('z-index','1')
     })
 
-    // Click Event to Close footer
-    $('#close-footer').click(function() {
-      mobileFooter.close();
-    }); // end Close
+    $('#mobile-nav').on('click', '.about', function(){
+        mobileNavBar.hideNav()
+        mobilePage.about()
+    })
 
-//     // Click event for login
-//     $('#mobile-login').click(function() {
-//       mobileFooter.open('Login', function() {
-//         $.ajax({
-//           type: 'GET',
-//           url: '/sidebar/combo_form',
-//           success: function(data) {
-//             $('#foot_container').html(data);
-//             mobilePage.signIn()
-//           }
-//         });
-//       });
-//     }); // end open
-
-
-//       // Click event for logout
-//     $('#mobile-logout').live('click', function() {
-//       var link = $(this);
-//       $(link).addClass('disabled');
-//       $.ajax({
-//         type: 'DELETE',
-//         url: '/users/sign_out.json',
-//           error: function(jqXHR) {
-//             $(link).removeClass('disabled');
-//           },
-//           success: function(data) {
-//             mobileFooter.changeTitle('Logged out');
-//           }
-//       });
-      
-//       return false;
-//     });
-
-//     // End Logout
-//     $('#combo-form').live('submit', function() {
-//       mobileFooter.close();
-//     });
   } // end if window size
 
 });
 
-// var footTitle = 'Adopt-a-thing';
 
-// var foot_container = $('<div>', {
-//   id: 'foot_container',
-//   height: '100%'
-// });
-
-// var mobileFooter = {
-//   open: function(title, callback) {
-//     this.changeTitle(title);
-//     $(foot_container).appendTo('#mobile-foot');
-//     $('#mobile-foot').animate({
-//       height: '350px',
-//     }, 300, 'linear', function() {
-//       $('#mobile-foot-head-title').empty();
-//       $('#mobile-foot-head-title').html('Login');
-//       $(foot_container).appendTo('#mobile-foot');
-//       callback.call();
-//     });
-//   },
-//   close: function() {
-//     this.changeTitle(footTitle);
-//     $(foot_container).remove();
-//     $('#mobile-foot').animate({
-//       height: '22px',
-//     }, 300, 'linear', function() {
-//       $('#mobile-foot-head-title').empty();
-//       $('#mobile-foot-head-title').html('Adopt-a-Thing');
-//     });
-//   },
-//   changeTitle: function(title) {
-//     $('#mobile-foot-head-title').empty();
-//     $('#mobile-foot-head-title').html(title);
-//   }
-// } // end mobileFooter

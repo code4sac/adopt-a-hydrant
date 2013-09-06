@@ -2,20 +2,23 @@
 	%li#mobile-search
 		= render :partial => "/mobile/search"
 	- if signed_in?
-		%li#edit_profile_link
+		%li.edit-profile
 			%i.icon-user
 			%span Edit Profile
 		%li#sign_out_link.mobile_sign_out
-			%i.icon-exit
+			%i.icon-signout
 			%span Sign Out
 	- else
 		%li.sign-up
 			%i.icon-user
 			%span Sign Up
 		%li.sign-in
-			%i.icon-enter
+			%i.icon-signin
 			%span Sign in
 	%li.find-hydrants
-		%i.icon-map-marker
+		%i.icon-hydrant
 		%span Find Hydrants
+	%li.about
+		%i.icon-info-sign
+		%span About
 = render :partial => "layouts/flash", :locals => {:flash => flash}

@@ -1,18 +1,16 @@
-#mobile-notifications
+#mobile-nav
+  = render :partial => "mobile/nav"
 #mobile-page
-  .mobile-page-header
-    %h4
-  .form-wrapper
-.table
-  #mobile-nav
-    = render :partial => "mobile/nav"
-  #mobile-head{:class => 'mobile-gradient'}
-    / #mobile-search
-    /   = render :partial => "mobile/search"
-    #search-button
+  #mobile-notifications
+  #mobile-head
+    #search-button.find-hydrants
+      %i.icon-hydrant
     #nav-button
-      %i.icon-nav
+      %i.icon-reorder
     %h1 Adopt-a-Hydrant
+  #page-contents
+    = render :partial => "mobile/page"
+.table
   .table-row
     .table-cell.sidebar{:id => 'sidebar'}
       %h1
@@ -47,6 +45,6 @@
     .table-cell.map-container
       #map
         &nbsp;
-  .table-row{:id => 'mobile-foot'}
-    = render :partial => "mobile/footer"
+  / .table-row{:id => 'mobile-foot'}
+  /   = render :partial => "mobile/footer"
 

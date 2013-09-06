@@ -12,11 +12,15 @@ AdoptAThing::Application.routes.draw do
   scope '/sidebar', controller: :sidebar do
     get :search, as: 'search'
     get :combo_form, as: 'combo_form'
-    get :edit_profile , as: 'edit_profile'
+    get :edit_profile, as: 'edit_profile'
   end
 
   scope '/mobile', controller: :mobile do
     get :nav, as: 'nav'
+    get :sign_in, as: 'sign_in'
+    get :sign_up, as: 'sign_up'
+    get :edit_profile, as: 'edit_profile'
+    get :page, as: 'page'
   end
 
   resource :reminders
