@@ -295,6 +295,14 @@ you can use the generic selector below, but it's slower:
     background: #464B4D;
     box-shadow: inset 0px 10px 23px rgba(255,255,255,.14);
     border-bottom: 1px solid rgba(0,0,0,.22);
+    padding: 8px 6px 22px 6px;
+  }
+
+  #address {
+      width: 214px;
+      height: 20px;
+      padding: 5px 10px 5px 32px;
+      border-radius: 20px;
   }
 
   #mobile-nav li:last-child {
@@ -307,23 +315,17 @@ you can use the generic selector below, but it's slower:
     top: -3px;
     margin-right: 24px;
   }
-
-  #mobile-nav .icon-map-marker {
-    font-size: 20px;
-    position: relative;
-    left: -3px;
-  }
   
-  #mobile-search {
-    padding-top: 10px !important;
-    padding-bottom: 20px !important;
+
+  #search-icon {
+    font-size: 16px !important;
+    color: rgba(0,0,0,.7);
+    position: absolute;
+    margin-top: -22px;
+    left: 12px;
   }
 
-  #address {
-    width: 210px;
-    height: 20px;
-    border-radius: 20px;
-  }
+  
 
   .selected-nav-item {
     background: #dd423e !important;

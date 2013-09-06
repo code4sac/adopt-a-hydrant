@@ -1,6 +1,7 @@
 %ul
 	%li#mobile-search
 		= render :partial => "/mobile/search"
+		%i#search-icon.icon-search
 	- if signed_in?
 		%li.edit-profile
 			%i.icon-user
@@ -17,7 +18,7 @@
 			%span Sign in
 	%li.find-hydrants
 		%i.icon-hydrant
-		%span Find Hydrants
+		%span View Hydrants
 	%li.about
 		%i.icon-info-sign
 		%span About
