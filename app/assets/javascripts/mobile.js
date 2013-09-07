@@ -24,6 +24,7 @@ $(function() {
             url: '/mobile/sign_in',
             success: function(data) {
               page.show().html(data);
+              $('#user_sign_in_fields').show();
               $('#combo-form').data({'state': 'user_sign_in', 'mobile': true});
             } 
           });  
@@ -95,13 +96,16 @@ $(function() {
 
       events = {
         showNav: function(){
-            nav.addClass('slide-nav')
-            page.addClass('slide')   
+            nav.addClass('slide-nav');
+            page.addClass('slide');  
         },
-        hideNav: function(){
-            nav.removeClass('slide-nav')
-            page.removeClass('slide')
-            map.css('z-index','-1') 
+        hideNav: function(e){
+            nav.removeClass('slide-nav');
+            page.removeClass('slide');
+            
+            if (!$(e.target).hasClass('find-hydrants')){
+              map.removeClass('map-active');
+            }
         },
       }
 
@@ -115,18 +119,18 @@ $(function() {
 
     // show/hide mobile navigation
 
-    $('#nav-button').click(function(){
+    $('#nav-button').click(function(e){
         var map = $('.map-container'),
             page = $('#page-contents');
 
         if (map.hasClass('slide') == false){
           mobileNavBar.showNav();
-          map.on('click',  mobileNavBar.hideNav );
-          page.on('click',  mobileNavBar.hideNav );
+          // $('body').on('click', '.map-container', mobileNavBar.hideNav );
+          // $('body').on('click', '#page-contents', mobileNavBar.hideNav );
         } else if (map.hasClass('slide') == true) {
-          mobileNavBar.hideNav()
-          map.off('click')
-          page.off('click')
+          mobileNavBar.hideNav(e)
+          // $('body').off('click', '.map-container' );
+          // $('body').off('click', '#page-contents' );
         }
         
     });
@@ -144,40 +148,40 @@ $(function() {
 
     // mobile navigation on click events
 
-    $('#mobile-nav').on('click', '.sign-up', function(){
-        mobilePage.signUp()
-        mobileNavBar.hideNav()
+    $('#mobile-nav').on('click', '.sign-up', function(e){
+        mobilePage.signUp();
+        mobileNavBar.hideNav(e);
     })
 
-    $('#mobile-nav').on('click', '.sign-in', function(){
-        mobilePage.signIn()
-        mobileNavBar.hideNav()
+    $('#mobile-nav').on('click', '.sign-in', function(e){
+        mobilePage.signIn();
+        mobileNavBar.hideNav(e);
     })
 
-    $('#mobile-page').on('click', '#user_forgot_password_link', function(){
-        mobilePage.forgotPass()
+    $('#mobile-page').on('click', '#user_forgot_password_link', function(e){
+        mobilePage.forgotPass();
     })
 
-    $('#mobile-nav').on('click', '#sign_out_link', function(){
+    $('#mobile-nav').on('click', '#sign_out_link', function(e){
         // also triggers original event in main.js.erb
-        mobileNavBar.hideNav()
+        mobileNavBar.hideNav(e);
     })
 
-    $('#mobile-nav').on('click', '.edit-profile', function(){
+    $('#mobile-nav').on('click', '.edit-profile', function(e){
         // also triggers original event in main.js.erb
-        mobileNavBar.hideNav()
-        mobilePage.editProfile()
+        mobileNavBar.hideNav(e);
+        mobilePage.editProfile();
     })
 
-    $(document).on('click', '.find-hydrants', function(){
-        mobilePage.hidePage()
-        mobileNavBar.hideNav()
-        $('.map-container').css('z-index','1')
+    $(document).on('click', '.find-hydrants', function(e){
+        $('.map-container').addClass('map-active');
+        mobilePage.hidePage();
+        mobileNavBar.hideNav(e);
     })
 
-    $('#mobile-nav').on('click', '.about', function(){
-        mobileNavBar.hideNav()
-        mobilePage.about()
+    $('#mobile-nav').on('click', '.about', function(e){
+        mobileNavBar.hideNav(e);
+        mobilePage.about();
     })
 
   } // end if window size

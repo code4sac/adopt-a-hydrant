@@ -5,21 +5,21 @@
 	- if signed_in?
 		%li.edit-profile
 			%i.icon-user
-			%span Edit Profile
+			Edit Profile
 		%li#sign_out_link.mobile_sign_out
 			%i.icon-signout
-			%span Sign Out
+			Sign Out
 	- else
 		%li.sign-up
 			%i.icon-user
-			%span Sign Up
+			Sign Up
 		%li.sign-in
 			%i.icon-signin
-			%span Sign in
+			Sign in
 	%li.find-hydrants
 		%i.icon-hydrant
-		%span View Hydrants
+		View Hydrants
 	%li.about
 		%i.icon-info-sign
-		%span About
+		About
 = render :partial => "layouts/flash", :locals => {:flash => flash}

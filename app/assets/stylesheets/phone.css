@@ -131,6 +131,10 @@ you can use the generic selector below, but it's slower:
     -webkit-transform: translate3d(0,0,0);
   }
 
+  .map-active {
+    z-index: 1 !important;
+  }
+
   #mobile-nav ul {
     transition: left .2s;
     -moz-transition: left .2s;
