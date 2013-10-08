@@ -1,6 +1,8 @@
 = form_tag "/address", :method => "get", :id => "address_form", :class => "search-form" do
   = hidden_field_tag "limit", params[:limit] || 10
   %fieldset.control-group
+    = label_tag "filter_things", "Filter Types", :id => 'filter_things'
+    = select("post",  "filter_things", [["Select Filter...", 0]] + Type.all.collect {|a| [a.title, a.id]}, :selected => 'NULL')
     = label_tag "city_state", t("labels.city_state"), :id => "city_state_label"
     = select_tag "city_state", "<option value=\"#{t("defaults.city_state")}\" selected=\"selected\">#{t("defaults.city_state")}</option>".html_safe
   %fieldset.control-group
@@ -15,4 +17,9 @@
 :javascript
   $(function() {
     $('#address').focus();
+    
+    $('#post_filter_things').change(function() {
+      var opt = $(this).val();
+      addMarkersAround('38.579016', '-121.482753');
+    });
   });
