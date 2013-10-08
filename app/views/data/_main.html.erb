@@ -1,0 +1,8 @@
+<h2>Adopt-a-thing "thing" uploader</h2>
+<% @types = Type.find(:all) %>
+<select name="thing_type" id="thing_type">
+  <OPTION value="NULL" SELECTED>Select Thing Type...</OPTION>
+  <% @types.each do |type| %>
+    <OPTION value="<%= type.id %>"><%= type.title %></OPTION>
+  <% end %>
+</select>

@@ -1,4 +1,5 @@
 AdoptAThing::Application.routes.draw do
+
   devise_for :users, :controllers => {
     passwords: 'passwords',
     registrations: 'users',
@@ -8,6 +9,7 @@ AdoptAThing::Application.routes.draw do
   get '/address', to: 'addresses#show', as: 'address'
   get '/info_window', to:'info_window#index', as: 'info_window'
   get '/sitemap', to: 'sitemaps#index', as: 'sitemap'
+  get '/upload', to: 'data#index'
 
   scope '/sidebar', controller: :sidebar do
     get :search, as: 'search'
